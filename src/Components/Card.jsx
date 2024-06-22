@@ -1,20 +1,32 @@
-import React from "react";
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
+import { GlobalContext } from "./utils/global.context";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faStar, faTimes } from "@fortawesome/free-solid-svg-icons";
 
+const Card = ({ dentist }) => {
+  const { theme, addFavoriteDentist, removeFavoriteDentist, favDentists } =
+    useContext(GlobalContext);
+  const isFavorited = favDentists.some((fav) => fav.id === dentist.id);
 
-const Card = ({ name, username, id }) => {
-
-  const addFav = ()=>{
-    // Aqui iria la logica para agregar la Card en el localStorage
-  }
+  const handleFavClick = () => {
+    if (isFavorited) {
+      removeFavoriteDentist(dentist.id);
+    } else {
+      addFavoriteDentist(dentist);
+    }
+  };
 
   return (
-    <div className="card">
-        {/* En cada card deberan mostrar en name - username y el id */}
-
-        {/* No debes olvidar que la Card a su vez servira como Link hacia la pagina de detalle */}
-
-        {/* Ademas deberan integrar la logica para guardar cada Card en el localStorage */}
-        <button onClick={addFav} className="favButton">Add fav</button>
+    <div className={`card ${theme}`}>
+      <Link to={`/dentista/${dentist.id}`}>
+      <img src="../../public/images/doctor.jpg" alt="Imagen de un doctor" />
+      <strong>{dentist.name}</strong>
+      <p>{dentist.username}</p>
+      </Link>
+      <button onClick={handleFavClick} className="favButton">
+        <FontAwesomeIcon icon={isFavorited ? faTimes : faStar} />
+      </button>
     </div>
   );
 };

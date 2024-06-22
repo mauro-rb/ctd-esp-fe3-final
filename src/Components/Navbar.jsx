@@ -1,16 +1,44 @@
-import React from 'react'
-
-//Este componente debera ser estilado como "dark" o "light" dependiendo del theme del Context
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
+import { GlobalContext } from "../Components/utils/global.context";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
 
 const Navbar = () => {
+  const { theme, setTheme } = useContext(GlobalContext);
+
+  const handleThemeChange = () => {
+    const newTheme = theme === "light" ? "dark" : "light";
+    setTheme(newTheme);
+  };
 
   return (
-    <nav>
-      {/* Aqui deberan agregar los liks correspondientes a las rutas definidas */}
-      {/* Deberan implementar ademas la logica para cambiar de Theme con el button */}
-      <button>Change theme</button>
+    <nav className={`navbar ${theme}`}>
+      <div className="logoDH">
+        <Link className="linkDH" to="/">
+          <span style={{ fontWeight: "bold", color: "red" }}>D</span>H Odonto{" "}
+        </Link>
+      </div>
+      <div className="links">
+        <Link to="/">
+          <h4>Inicio</h4>
+        </Link>
+        <Link to="/contacto">
+          <h4>Contacto</h4>
+        </Link>
+        <Link to="/favoritos">
+          <h4>Favoritos</h4>
+        </Link>
+        <button onClick={handleThemeChange} className="theme-switch">
+          {theme === "dark" ? (
+            <FontAwesomeIcon icon={faSun} />
+          ) : (
+            <FontAwesomeIcon icon={faMoon} />
+          )}
+        </button>
+      </div>
     </nav>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;
