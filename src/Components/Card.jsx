@@ -20,7 +20,7 @@ const Card = ({ dentist }) => {
   return (
     <div className={`card ${theme}`}>
       <Link to={`/dentista/${dentist.id}`}>
-      <img src="../../public/images/doctor.jpg" alt="Imagen de un doctor" />
+      <img src="/images/doctor.jpg" alt="Imagen de un doctor" />
       <strong>{dentist.name}</strong>
       <p>{dentist.username}</p>
       </Link>
